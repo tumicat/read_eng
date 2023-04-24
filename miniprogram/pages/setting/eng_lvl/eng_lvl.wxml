@@ -1,0 +1,26 @@
+<block wx:if="{{ loading }}">
+  <view class="loader-container menu-loader"></view>
+
+  <view class="loader-container">
+    <view class="load-bar-container">
+      <view class="flex-row flex-center">
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+      </view>
+
+      <view class="loader-msg">更新中</view>
+    </view>
+  </view>
+</block>
+
+<view class="sectionmenu-btn-bar menu-border-top menu-border-bottom menu-top-margin-l">
+  <picker class="menu-btn" bindchange="pickChange" value="{{ eng_level_select }}" range="{{ eng_level }}">
+    重设阅读难度: {{ eng_level[eng_level_select] }}
+  </picker>
+</view>
+
+<view class="menu-note-txt">
+  重设阅读难度, 当前级别的文章阅读数将归零
+</view>

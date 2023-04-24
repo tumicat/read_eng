@@ -1,0 +1,12 @@
+@import "../../../style/loader.wxss";
+
+picker {
+  padding: 28rpx;
+  background: white;
+}
+
+.menu-note-txt {
+  font-size: 30rpx;
+  color: #ff8246;
+  padding: 28rpx;
+}

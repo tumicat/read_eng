@@ -1,0 +1,96 @@
+<block wx:if="{{ loading }}">
+  <view class="loader-container">
+    <view class="flex-row flex-center" wx:if="{{ !load_error }}">
+      <image src="../../images/read.svg" class="loader-icon"></image>
+    </view>
+
+    <view class="load-bar-container">
+      <view class="flex-row flex-center">
+        <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+      </view>
+
+      <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+      </view>
+
+      <view class="loader-msg">{{ msg }}</view>
+
+      <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+        <button 
+        class="orange-light-btn btn-small" 
+        hover-class="btn-orange-light-hover"
+        bindtap="reload"
+        >重新读取</button>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- payment ui -->
+<block wx:if="{{ !loading }}">
+  <view class="loader-container" style="margin-top: 0;">
+
+    <view class="flex-col flex-center">
+      <view class="main-text">套餐到期啦、坚持阅读哟!</view>
+    </view>
+
+    <view class="flex-row flex-center" style="margin-top: 40rpx;">
+      <image src="../../images/read.svg" class="loader-icon"></image>
+    </view>
+
+    <view class="flex-col flex-center" style="margin-top: 40rpx;">
+      <view class="main-marketing">书之于人类、犹如记忆于之个人</view>
+      <view class="sub-marketing menu-top-margin-m" style="width: 520rpx;">Books are to mankind what memory is to the individual</view>
+    </view>
+
+    <view class="flex-row flex-abs-center" style="margin-top: 60rpx;">
+      <image src="../../images/shopping.png" class="shopping"></image>
+      <view class="price" style="margin-left: 28rpx;">{{ price_list[product_selected] }}元</view>
+      <view class="discount" style="margin-left: 18rpx;">{{ discount_msg }}</view>
+    </view>
+
+    <view class="flex-row flex-center" style="margin-top: 28rpx;">
+      <picker bindchange="pickChange" 
+      value="{{ product_selected }}" 
+      range="{{ product_list }}" 
+      class="flex-row flex-center index-control primary-selector btn-middle"
+      >
+        选择套餐: {{ product_list[product_selected] }}
+      </picker>
+    </view>
+
+    <view class="flex-row flex-abs-center" style="margin-top: 18rpx;">
+      <input type="number" 
+      placeholder="我有代购券"
+      confirm-type="done"
+      placeholder-style="text-align: center;" 
+      class="primary-input flex-row flex-center index-control"
+      bindinput="bindKeyInput"
+      ></input>
+    </view>
+
+    <view class="flex-row flex-center" style="margin-top: 40rpx;">
+      <button 
+        lang="zh_CN"
+        class="orange-btn btn-middle full-width"
+        hover-class="btn-hover"
+        bindtap="submitPurchase"
+        style="width: 388rpx;"
+      >立即购买</button>
+    </view>
+
+    <view class="flex-row flex-center" 
+    style="margin-top: 32rpx;" wx:if="{{ !load_error }}">
+      <view class="loading-bar {{ load_cls }}"></view>
+      <view class="loading-bar {{ load_cls }}"></view>
+      <view class="loading-bar {{ load_cls }}"></view>
+      <view class="loading-bar {{ load_cls }}"></view>
+    </view>
+
+  </view>
+</block>
+
+

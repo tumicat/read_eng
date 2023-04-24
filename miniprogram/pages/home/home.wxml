@@ -1,0 +1,107 @@
+<block wx:if="{{ !loading }}">
+  <!--  swiper 3 featured -->
+  <view class="page-section page-section-spacing" wx:if="{{ swiper_featured.length > 0}}">
+    <view class="section">
+      <text>今日推荐</text>
+    </view>
+    <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" 
+      circular="{{circular}} " interval="{{interval}}" duration="{{duration}}"
+      previous-margin="{{previousMargin}}rpx" next-margin="{{nextMargin}}rpx">
+      <block wx:for="{{swiper_featured}}" wx:key="unique" wx:for-index="idx" wx:if="{{idx < 4}}">
+        <swiper-item class="swiper-feature" data-id="{{item.article_id}}" bindtap="viewArticle">
+          <image class="swiper-img" src="{{item.url}}" mode="aspectFill"></image>
+          <text class="swiper-txt">{{item.title}}</text>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <!--  list of top 5 featured -->
+  <view class="page-section page-section-spacing">
+    <view class="section">
+      <text>热门阅读</text>
+    </view>
+    <block wx:for="{{list_featured}}" wx:key="unique" wx:for-index="idx" wx:if="{{idx < 5}}">
+      <view class="list-title-box" data-id="{{item.article_id}}" bindtap="viewArticle">
+        <text class="list-title-text">{{item.title}}</text>
+        <image src="{{item.url}}" class="list-title-img" mode="aspectFill"></image>
+      </view>
+    </block>
+  </view>
+
+  <!--  interest tags -->
+  <view class="page-section page-section-spacing">
+    <view class="section">
+      <text>兴趣爱好</text>
+    </view>
+    <scroll-view scroll-x class="scroll-view-x">
+      <view class="scroll-view-x-interest" wx:for="{{interest_tags}}" wx:key="unique">
+        <view class="interest-tag" id="{{index}}" bindtap="gotoDiscovery">
+          <image class="interest_tag_img" src="{{item.img}}"></image>
+          <text class="interest_tag_txt">{{item.tag_cn}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!--  scroll x ads -->
+  <view class="page-section page-section-spacing">
+    <view class="section">
+      <text>阅读技巧</text>
+    </view>
+    <scroll-view scroll-x class="scroll-view-x">
+      <view class="scroll-view-x-ads" wx:for="{{ads}}" 
+      wx:key="unique" data-id="{{item.ad_id}}" bindtap="goToAdPage">
+        <view class="flex-row flex-abs-center ads-txt">
+          {{item.ad_name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!--  list of more articles -->
+  <view class="page-section page-section-spacing">
+    <view class="section">
+      <text>更多阅读</text>
+    </view>
+    <block wx:for="{{article}}" wx:key="unique" >
+      <view class="list-title-box" data-id="{{item.article_id}}" bindtap="viewArticle">
+        <text class="list-title-text">{{item.title}}</text>
+        <image src="{{item.url}}" class="list-title-img" mode="aspectFill"></image>
+      </view>
+    </block>
+    
+    <view class="loader-msg" wx:if="{{loading_more && has_more}}">努力加载中...</view>
+
+    <view class="loader-msg" wx:if="{{ !has_more }}">我是有底线的</view>
+
+  </view>
+</block>
+
+<block wx:elif="{{ loading }}">
+  <!-- middle loading bar -->
+  <view class="loader-container">
+    <view class="load-bar-container">
+      <view class="flex-row flex-center">
+        <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+      </view>
+
+      <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+      </view>
+
+      <view class="loader-msg">{{ msg }}</view>
+
+      <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+        <button 
+        class="orange-light-btn btn-small" 
+        hover-class="btn-orange-light-hover"
+        bindtap="reload"
+        >重新读取</button>
+      </view>
+    </view>
+  </view>
+</block>

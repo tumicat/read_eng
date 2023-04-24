@@ -1,0 +1,79 @@
+<view class="loader-container">
+  <view class="flex-row flex-center" wx:if="{{ !first_time & !load_error }}">
+    <image src="../../images/read.svg" class="loader-icon"></image>
+  </view>
+
+  <view class="load-bar-container" wx:if="{{ !first_time }}">
+    <view class="flex-row flex-center">
+      <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+    </view>
+
+    <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+    </view>
+
+    <view class="loader-msg">{{ msg }}</view>
+
+    <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+      <button 
+      class="orange-light-btn btn-small" 
+      hover-class="btn-orange-light-hover"
+      bindtap="reload"
+      >重新读取</button>
+    </view>
+  </view>
+</view>
+
+<!-- first time user grant userinfo -->
+
+<view class="loader-container" wx:if="{{ first_time }}">
+
+  <view class="flex-row flex-center">
+    <view class="primary-text">一起读英语吧!</view>
+  </view>
+
+  <view class="flex-row flex-center" style="margin-top: 28rpx;">
+    <view class="sub-text">{{ msg_welcome }}</view>
+  </view>
+
+  <view class="flex-row flex-center" style="margin-top: 88rpx;">
+    <image src="../../images/read.svg" class="loader-icon"></image>
+  </view>
+
+  <view class="flex-row flex-center" style="margin-top: 88rpx;" wx:if="{{ !is_old_user_back }}">
+    <picker bindchange="pickChange" 
+    value="{{ eng_level_select }}" 
+    range="{{ eng_level }}" 
+    class="flex-row flex-center index-control primary-selector btn-middle">
+      选择起点: {{ eng_level[eng_level_select] }}
+    </picker>
+  </view>
+
+  <view class="flex-row flex-center" style="margin-top: {{ btn_top_margin }};">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      lang="zh_CN"
+      class="orange-btn btn-middle full-width"
+      hover-class="btn-hover"
+      bindtap="showLoadBar"
+    >{{ msg_btn }}</button>
+  </view>
+
+  <view class="flex-row flex-center" 
+  style="margin-top: 32rpx;" wx:if="{{ !load_error }}">
+    <view class="loading-bar {{ load_cls }}"></view>
+    <view class="loading-bar {{ load_cls }}"></view>
+    <view class="loading-bar {{ load_cls }}"></view>
+    <view class="loading-bar {{ load_cls }}"></view>
+  </view>
+
+  <view class="flex-row flex-center sub-text"
+  style="margin-top: 32rpx; opacity: {{ is_grant_color }};" 
+  wx:if="{{ !load_error }}">
+  请允许授权进入首页</view>
+
+</view>

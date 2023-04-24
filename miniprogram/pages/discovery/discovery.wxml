@@ -1,0 +1,64 @@
+<!-- middle loading bar -->
+<view class="loader-container" wx:if="{{ loading }}">
+  <view class="load-bar-container">
+    <view class="flex-row flex-center">
+      <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+    </view>
+
+    <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+    </view>
+
+    <view class="loader-msg">{{ msg }}</view>
+
+    <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+      <button 
+      class="orange-light-btn btn-small" 
+      hover-class="btn-orange-light-hover"
+      bindtap="reload"
+      >重新读取</button>
+    </view>
+  </view>
+</view>
+
+
+<view class="bar-container">
+  <!-- interest tags -->
+  <scroll-view class="tag-bar" scroll-x scroll-with-animation="true" scroll-left="{{scroll_left}}" scroll-into-view="{{toView}}">
+    <view class="tag {{current_interest==index?'active':''}}" wx:for="{{interest_tags}}" wx:key="unique" data-index="{{index}}" data-name="{{item.tag}}" id="int{{index}}" bindtap="switchIntTab">
+      {{item.tag_cn}}
+    </view>
+  </scroll-view>
+
+  <!-- category tags -->
+  <scroll-view class="tag-bar" scroll-x>
+    <view class="tag {{current_category==index?'active':''}}" wx:for="{{cat_tags}}" wx:key="unique" data-index="{{index}}" data-name="{{item.tag}}" id="cat{{index}}" bindtap="switchCatTab">
+      {{item.tag_cn}}
+    </view>
+  </scroll-view>
+</view>
+
+
+<!--  list of articles -->
+<view class="scroll-container">
+  <scroll-view class="page-section-spacing" style="height: {{scroll_y_height}}px" scroll-y
+              bindscrolltoupper='scrollToUpper' bindscrolltolower="scrollToLower" 
+              upper-threshold="-88" lower-threshold="0" wx:if="{{ !loading }}">
+    <view class="loader-msg" wx:if="{{refreshing}}" >玩命刷新中...</view>
+    <block wx:for="{{article}}" wx:key="unique" >
+      <view class="list-title-box" data-id="{{item.article_id}}" bindtap="viewArticle">
+        <text class="list-title-text">{{item.title}}</text>
+        <image src="{{item.url}}" class="list-title-img" mode="aspectFill"></image>
+      </view>
+    </block>
+
+    <view class="loader-msg" wx:if="{{loading_more && has_more}}">努力加载中...</view>
+    <view class="loader-msg" wx:if="{{ !has_more }}">我是有底线的</view>
+
+    <view style="height: 180rpx" ></view>
+    
+  </scroll-view>
+</view>

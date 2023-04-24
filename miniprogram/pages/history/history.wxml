@@ -1,0 +1,75 @@
+<!-- middle loading bar -->
+<view class="loader-container" wx:if="{{ loading }}">
+  <view class="load-bar-container">
+    <view class="flex-row flex-center">
+      <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+    </view>
+
+    <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+      <view class="loading-bar loading-bar-active"></view>
+    </view>
+
+    <view class="loader-msg">{{ msg }}</view>
+
+    <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+      <button 
+      class="orange-light-btn btn-small" 
+      hover-class="btn-orange-light-hover"
+      bindtap="reload"
+      >重新读取</button>
+    </view>
+  </view>
+</view>
+
+<!-- month picker -->
+<view class="month-picker-conainer">
+  <view class="flex-1 flex-row flex-abs-center">
+    
+    <button class="round-btn" hover-class="btn-orange-light-hover" bindtap="monthBack" disabled="{{ disable_nav_btn }}">
+      <image src="../../images/left-arrow.png" class="btn-icon"></image>
+    </button>
+
+    <view class="year-month">
+      <view>{{ year }}年{{ month }}月</view>
+    </view>
+    
+    
+    <button class="round-btn" hover-class="btn-orange-light-hover" bindtap="monthNext" disabled="{{ disable_nav_btn }}">
+      <image src="../../images/right-arrow.png" class="btn-icon"></image>
+    </button>
+
+  </view>
+</view>
+
+<!-- reading records -->
+<scroll-view scroll-y style="height: {{s_view_height}}px;" 
+class="read-record-container" bindscrolltoupper="scrollToUpper" upper-threshold="-88"
+wx:if="{{ !loading }}">
+  
+  <view class="loader-msg" wx:if="{{refreshing}}" >玩命刷新中...</view>
+
+  <view class="read-record-box">
+  
+    <view wx:for="{{history}}" wx:key="unique" 
+    class="read-record {{item.score_class}}" 
+    data-id="{{item.article_id}}" hover-class="read-record-hover" 
+    bindtap="goToArticle">
+      <view class="record-day">{{item.day}}日</view>
+      <view class="record-title">{{item.title}}</view>
+      <view class="record-score">{{item.score}} 分</view>
+    </view>
+
+    <!-- show if no history -->
+    <view class="loader-container" wx:if="{{ !loading && no_history }}">
+      <view class="no_history_msg">没有阅读记录哟</view>
+      <view class="no_history_msg">快去阅读吧!</view>
+    </view>
+
+  </view>
+
+  <!-- fill the full screen -->
+  <view style="height: {{screen_fill_height}}px;"></view>
+</scroll-view>

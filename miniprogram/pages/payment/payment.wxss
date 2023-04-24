@@ -1,0 +1,40 @@
+@import "../../style/loader.wxss";
+
+.index-control {
+  width: 350rpx;
+}
+
+.main-text {
+  font-size: 40rpx;
+  text-align: center;
+  color: #ff8246;
+}
+
+.sub-marketing {
+  font-size: 30rpx;
+  text-align: center;
+  color: #585858;
+}
+
+.main-marketing {
+ font-size: 32rpx;
+ text-align: center;
+ color: #292929;
+}
+
+.price {
+  text-align: center;
+  font-size: 32rpx;
+  color: #ff8246;
+}
+
+.discount {
+  text-align: center;
+  font-size: 32rpx;
+  color: #292929;
+}
+
+.shopping {
+  width: 68rpx;
+  height: 68rpx;
+}

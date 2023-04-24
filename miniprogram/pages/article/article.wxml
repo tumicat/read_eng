@@ -1,0 +1,63 @@
+<block wx:if="{{ loading }}">
+  <view class="loader-container">
+    <view class="flex-row flex-center" wx:if="{{ !load_error }}">
+      <image src="../../images/read.svg" class="loader-icon"></image>
+    </view>
+
+    <view class="load-bar-container">
+      <view class="flex-row flex-center">
+        <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+      </view>
+
+      <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+      </view>
+
+      <view class="loader-msg">{{ msg }}</view>
+
+      <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+        <button 
+        class="orange-light-btn btn-small" 
+        hover-class="btn-orange-light-hover"
+        bindtap="reload"
+        >重新读取</button>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- article content -->
+<block wx:elif="{{ !loading }}">
+  <view class="article-container">
+    <view class="title">{{ title }}</view>
+    <!-- <view class="article-info-bar">{{ source }} - {{ author }} (字数: {{ num_words }})</view> -->
+    <view class="article-info-bar">字数: {{ num_words }}</view>
+    
+    <image src="{{ cover_url }}" class="article-top-image" mode="aspectFill"></image>
+
+    <view class="article-content-container">
+      <view wx:for="{{article_content.content}}" wx:key="unique">
+        <view class="article-content" 
+        wx:if="{{ item.type === 'text' }}">{{item.text}}</view>
+
+        <view class="article-sub-title" 
+        wx:if="{{ item.type === 'sub-title' }}">{{item.text}}</view>
+
+        <image src="{{ item.url }}" 
+        class="article-top-image" mode="aspectFill"
+        wx:if="{{ item.type === 'img' }}"></image>
+      </view>
+    </view>
+
+    <view class="flex-row flex-abs-center menu-top-margin-xl menu-bottom-margin-m" wx:if="{{ !isAdv }}">
+      <view>
+        <button 
+        class="orange-light-btn btn-middle article-btn" 
+        hover-class="btn-orange-light-hover" bindtap="goToQuestion">进入小测试</button>
+      </view>
+    </view>
+  </view>
+</block>

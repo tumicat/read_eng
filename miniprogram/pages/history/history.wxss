@@ -1,0 +1,87 @@
+@import "../../style/loader.wxss";
+
+.month-picker-conainer {
+  padding-top: 38rpx;
+  padding-bottom: 38rpx;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.year-month {
+  font-size: 34rpx;
+  width: 188rpx;
+  text-align: center;
+}
+
+.month-btn {
+  margin: 0 28rpx;
+  padding: 0;
+}
+
+.read-record-container {
+  overflow-y: scroll;
+}
+
+.read-record {
+  height: 138rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+}
+
+.read-record-hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.read-record-bottom {
+  margin-bottom: 28rpx;
+}
+
+.record-day {
+  width: 68rpx;
+  font-size: 28rpx;
+  text-align: right;
+  padding: 28rpx;
+  color: #585858;
+}
+
+.record-title {
+  flex: 1;
+  padding: 0 28rpx;
+  text-align: left;
+  font-size: 32rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 2; 
+  overflow:hidden; 
+  text-overflow: ellipsis; 
+}
+
+.record-score {
+  width: 108rpx;
+  text-align: right;
+  padding: 28rpx 58rpx 28rpx 28rpx;
+  font-size: 28rpx;
+}
+
+.record-h {
+  border-left: 8rpx solid #3BB273;
+}
+
+.record-m {
+  border-left: 8rpx solid rgba(0, 0, 0, 0.18);
+}
+
+.record-l {
+  border-left: 8rpx solid #ff8246; 
+}
+
+.no_history_msg {
+  font-size: 32rpx;
+  color: #ff8246;
+  text-align: center;
+}

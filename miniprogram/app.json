@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/home",
+    "pages/discovery/discovery",
+    "pages/user/user",
+    "pages/article/article",
+    "pages/history/history",
+    "pages/setting/eng_lvl/eng_lvl",
+    "pages/payment/payment",
+    "pages/question/question",
+    "pages/tipSwiper/tipSwiper",
+    "pages/showPage/showPage",
+    "pages/friends/friends"
+  ],
+  "tabBar": {
+    "color": "#aaaaaa",
+    "selectedColor": "#f85415",
+    "list": [
+      {
+        "selectedIconPath": "images/tab_icons/book-active.png",
+        "iconPath": "images/tab_icons/book-inactive.png",
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "images/tab_icons/look-active.png",
+        "iconPath": "images/tab_icons/look-inactive.png",
+        "pagePath": "pages/discovery/discovery",
+        "text": "发现"
+      },
+      {
+        "selectedIconPath": "images/tab_icons/user-active.png",
+        "iconPath": "images/tab_icons/user-inactive.png",
+        "pagePath": "pages/user/user",
+        "text": "我的"
+      }
+    ]
+  },
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "读英语吧",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,221 @@
+<!-- waiting for loading -->
+<block wx:if="{{ loading }}">
+  <view class="loader-container">
+    <view class="flex-row flex-center" wx:if="{{ !load_error }}">
+      <image src="../../images/read.svg" class="loader-icon"></image>
+    </view>
+
+    <view class="load-bar-container">
+      <view class="flex-row flex-center">
+        <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+      </view>
+
+      <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+      </view>
+
+      <view class="loader-msg">{{ msg }}</view>
+
+      <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+        <button 
+        class="orange-light-btn btn-small" 
+        hover-class="btn-orange-light-hover"
+        bindtap="reload"
+        >重新读取</button>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- actual page content -->
+<block wx:elif="{{ !loading }}">
+  
+  <!-- user info -->
+  <view class="user-banner flex-row">
+    <view class="flex-row flex-abs-center userinfo-avatar-container">
+      <image class="userinfo-avatar" src="{{avatarUrl}}"></image>
+    </view>
+
+    <view class="flex-col flex-center userinfo-display-container">
+      <view class="userinfo-display-text">用户名: {{ username }}</view>
+      <view class="userinfo-display-text">到期日: {{ expire_date }}</view>
+      <view class="userinfo-display-text">经验值: {{ exp_level }}</view>
+    </view>
+  </view>
+
+  <!-- reading weekly view -->
+  <view class="weekly-record-banner flex-row">
+    <view class="weekly-record-container flex-col flex-abs-center">
+      <view class="flex-1">
+        <view class="weekly-record-txt">本周阅读</view>
+      </view>
+
+      <view class="flex-1">
+        <view class="weekly-record-txt">{{ week_read_num }} 天</view>
+      </view>
+    </view>
+    
+    <view class="flex-row flex-1 weekly-star-box">
+      <view class="flex-1 flex-col flex-abs-center" wx:for="{{ week }}" wx:key="unique">
+        <view class="flex-1">
+          <view class="weekly-record-txt {{ item.cls_dt }}">{{ item.date }}</view>
+        </view>
+
+        <view class="flex-1 flex-col flex-abs-center">
+          <view class="star {{ item.cls_star }}"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- overall summary -->
+  <view class="summary-stats-section">
+    <view class="summary-stats-container">
+      <view class="summary-stats-card flex-col">
+        <view class="summary-title">阅读统计</view>
+
+        <view class="summary-stats-box flex-row">
+          <view class="stats-box">
+            <view class="align-center">
+              <image src="../../images/books.png" class="stats-image"></image>
+            </view>
+            <view class="stats">{{ total_articles }}</view>
+            <view class="stats-title">文章</view>
+          </view>
+          
+          <view class="stats-box">
+            <view class="align-center">
+              <image src="../../images/abc.png" class="stats-image"></image>
+            </view>
+            <view class="stats">{{ total_words }}</view>
+            <view class="stats-title">字数</view>
+          </view>
+
+          <view class="stats-box">
+            <view class="align-center">
+              <image src="../../images/test.png" class="stats-image"></image>
+            </view>
+            <view class="stats">{{ total_questions }}</view>
+            <view class="stats-title">答题</view>
+          </view>
+
+          <view class="stats-box">
+            <view class="align-center">
+              <image src="../../images/exam.png" class="stats-image"></image>
+            </view>
+            <view class="stats">{{ avg_score }}</view>
+            <view class="stats-title">得分</view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+
+    <view class="summary-stats-container menu-top-margin-l">
+      <view class="summary-stats-card flex-col">
+        <view class="summary-title">级别难度</view>
+
+        <view class="flex-row">
+          <view class="flex-1 flex-abs-center stats-progress">
+            <view class="stats-title-black">新闻 ({{ num_cat_article.news }}/10)</view>
+            <progress percent="{{ num_cat_article.news * 10 }}" color="#ff8246" />
+          </view>
+          
+          <view class="flex-1 flex-abs-center stats-progress">
+            <view class="stats-title-black">科普 ({{ num_cat_article.non_fiction }}/10)</view>
+            <progress percent="{{ num_cat_article.non_fiction * 10 }}" color="#ff8246" />
+          </view>
+          
+          <view class="flex-1 flex-abs-center stats-progress">
+            <view class="stats-title-black">故事 ({{ num_cat_article.story }}/10)</view>
+            <progress percent="{{ num_cat_article.story * 10 }}" color="#ff8246" />
+          </view>
+        </view>
+
+        <view class="flex-row flex-abs-center" style="margin-top: 50rpx;">
+          <view class="eng_lvl">{{ current_eng_lvl }}</view>
+        </view>
+
+        <view class="flex-row flex-abs-center menu-top-margin-l">
+          <view class="stats-title" style="margin-right:8rpx; font-weight: bold;">
+            升级条件:
+          </view>
+
+          <view class="stats-title">
+            完成各类别阅读10篇, 并达到80分以上
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- menu buttons -->
+  <view class="menu-btn-bar menu-border-top flex-row" bindtap="goToShowPage" hover-class="menu-btn-hover">
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/like.png" class="menu-btn-icon"></image>
+    </view>
+
+    <view class="flex-1 flex-row flex-align-center">
+      <view class="menu-btn">
+        本周打卡
+      </view>
+    </view>
+
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/menu-arrow.png" class="menu-btn-icon-small"></image>
+    </view>
+  </view>
+
+  <view class="menu-btn-bar menu-border-top flex-row" bindtap="goToFriends" hover-class="menu-btn-hover">
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/friends.png" class="menu-btn-icon"></image>
+    </view>
+
+    <view class="flex-1 flex-row flex-align-center">
+      <view class="menu-btn">
+        我的好友
+      </view>
+    </view>
+
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/menu-arrow.png" class="menu-btn-icon-small"></image>
+    </view>
+  </view>
+
+  <view class="menu-btn-bar menu-border-top flex-row" bindtap="goToReadHistory" hover-class="menu-btn-hover">
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/history.png" class="menu-btn-icon"></image>
+    </view>
+
+    <view class="flex-1 flex-row flex-align-center">
+      <view class="menu-btn">
+        阅读历史
+      </view>
+    </view>
+
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/menu-arrow.png" class="menu-btn-icon-small"></image>
+    </view>
+  </view>
+
+  <view class="menu-btn-bar menu-border-top menu-border-bottom flex-row" bindtap="goToResetEngLvl" hover-class="menu-btn-hover">
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/lvl.png" class="menu-btn-icon"></image>
+    </view>
+
+    <view class="flex-1 flex-row flex-align-center">
+      <view class="menu-btn">
+        阅读难度
+      </view>
+    </view>
+
+    <view class="flex-row flex-abs-center">
+      <image src="../../images/menu-arrow.png" class="menu-btn-icon-small"></image>
+    </view>
+  </view>
+
+  <view class="empty-bottom"></view>
+</block>

@@ -1,0 +1,5 @@
+@import "../../style/loader.wxss";
+
+.index-control {
+  width: 350rpx;
+}

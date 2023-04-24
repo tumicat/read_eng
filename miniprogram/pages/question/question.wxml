@@ -1,0 +1,83 @@
+<block wx:if="{{ loading }}">
+  <view class="loader-container">
+    <view class="flex-row flex-center" wx:if="{{ !load_error }}">
+      <image src="../../images/read.svg" class="loader-icon"></image>
+    </view>
+
+    <view class="load-bar-container">
+      <view class="flex-row flex-center">
+        <icon type="warn" size="60" color="#88379" wx:if="{{ load_error }}" />
+      </view>
+
+      <view wx:if="{{ !load_error }}" class="flex-row flex-center">
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+        <view class="loading-bar loading-bar-active"></view>
+      </view>
+
+      <view class="loader-msg">{{ msg }}</view>
+
+      <view class="menu-top-margin-l" wx:if="{{ load_error }}">
+        <button 
+        class="orange-light-btn btn-small" 
+        hover-class="btn-orange-light-hover"
+        bindtap="reload"
+        >重新读取</button>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- article content -->
+<block wx:elif="{{ !loading }}">
+  <view class="article-container">
+    <view class="title">阅读小测试</view>
+
+    <view class="question-container flex-col">
+      <view class="question" 
+      wx:for="{{questions}}" wx:key="unique" wx:for-index="q_id" wx:for-item="q">
+
+        <view class="question-title">Q{{ q_id + 1 }}. {{ q.question }}</view>
+
+        <radio-group class="radio-group" bindchange="radioChange" data-id="{{ q_id }}">
+
+          <label class="radio {{ !is_submitted ? '' : ((index === q.answer_index ) ? 'answer-right' : (index === q.select_index? 'answer-wrong' : '')) }}" 
+            wx:for="{{q.options}}" wx:key="unique">
+            
+            <radio value="{{ index }}" color="#ff8246" 
+            checked="{{ q.select_index === index }}"
+            disabled="{{ q.is_correct !== null }}"
+            /> {{ item }}
+          </label>
+
+        </radio-group>
+
+        <block wx:if="{{ q.is_correct !== null }}">
+          <view class="question-explain-title">答案解释</view>
+          <view class="question-explain">{{ q.explain }}</view>
+        </block>
+
+      </view>
+    </view>
+
+    <view class="flex-row flex-abs-center menu-top-margin-xl menu-bottom-margin-m" wx:if="{{ !is_submitted }}">
+      <view>
+        <button 
+        class="orange-light-btn btn-middle article-btn" 
+        hover-class="btn-orange-light-hover" bindtap="showResult">确认提交</button>
+      </view>
+    </view>
+
+    <view class="flex-col menu-top-margin-xl menu-bottom-margin-l question-result-box" 
+    wx:if="{{ is_submitted }}">
+      <view class="question-result-main bottom-pd">{{ score }} 分</view>
+      <view class="question-result bottom-pd">一共 {{ tot_q }} 题目, 答对了 {{ corr_q }} 题</view>
+      <view class="question-result bottom-pd">{{ result_msg }}</view>
+    </view>
+
+    <view class="flex-row flex-abs-center menu-bottom-margin-l" wx:if="{{ has_warning }}">
+      <view class="question-result">请回答所有的问题再提交哟</view>
+    </view>
+  </view>
+</block>
